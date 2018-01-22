@@ -7,7 +7,6 @@ class SudokuPuzzle
 {
   private:
 	int grid[9][9][10];
-	int gridFlag[9][9];
 	bool nextLevel;
 	bool zoneCheck(int v, int cr, int cc) //value, current row, current column
 	{
@@ -233,10 +232,6 @@ class SudokuPuzzle
 						}
 						if (count == 1) //if only one possibility found, use the stored coord. to change the cell value to the possibility
 						{
-							if (nextLevel)
-							{
-								// gridFlag[r][c] == 1;
-							}
 							grid[r][c][0] = sd;
 							//cout << "single: " << sd << " at " << r << " " << c << endl;
 							changed = true;
@@ -333,10 +328,6 @@ class SudokuPuzzle
 						{
 							if (grid[r][c][d] != tmp[grid[r][c][d] - 1] && grid[r][c][d] != 0) //if a possible value of the cell is unique to the zone, then set the cell to that value
 							{
-								if (nextLevel)
-								{
-									// gridFlag[r][c] == 1;
-								}
 								grid[r][c][0] = grid[r][c][d];
 								//cout << "zone unique: " << grid[r][c][d] << " at " << r << " " << c << endl;
 								changed = true;
@@ -365,10 +356,6 @@ class SudokuPuzzle
 						{
 							if (grid[r][c][d] != tmp[grid[r][c][d] - 1] && grid[r][c][d] != 0) //if a possible value of the cell is unique to the row, then set the cell to that value
 							{
-								if (nextLevel)
-								{
-									// gridFlag[r][c] == 1;
-								}
 								grid[r][c][0] = grid[r][c][d];
 								//cout << "row unique: " << grid[r][c][d] << " at " << r << " " << c << endl;
 								changed = true;
@@ -397,10 +384,6 @@ class SudokuPuzzle
 						{
 							if (grid[r][c][d] != tmp[grid[r][c][d] - 1] && grid[r][c][d] != 0) //if a possible value of the cell is unique to the column, then set the cell to that value
 							{
-								if (nextLevel)
-								{
-									// gridFlag[r][c] == 1;
-								}
 								grid[r][c][0] = grid[r][c][d];
 								//cout << "column unique: " << grid[r][c][d] << " at " << r << " " << c << endl;
 								changed = true;
@@ -492,14 +475,12 @@ class SudokuPuzzle
   public:
 	SudokuPuzzle(string f) //reads in the sudoku puzzle and sets possible
 	{
-		// nextLevel == false;
 		ifstream infs(f.c_str());
 		for (int r = 0; r < 9; r++)
 		{
 			for (int c = 0; c < 9; c++)
 			{
 				infs >> grid[r][c][0];
-				gridFlag[r][c] = 0;
 				for (int d = 1; d < 10; d++)
 				{
 					if (grid[r][c][0] != 0)
@@ -544,16 +525,6 @@ class SudokuPuzzle
 				{
 					return 0;
 				}
-				for (int r = 0; r < 9; r++)
-				{
-					for (int c = 0; c < 9; c++)
-					{
-						if (gridFlag[r][c] == 1)
-						{
-							grid[r][c][0] = 0;
-						}
-					}
-				}
 			}
 		}
 	}
@@ -577,5 +548,6 @@ class SudokuPuzzle
 				ofs << "----------------------\n";
 			}
 		}
+		ofs.close();
 	}
 };

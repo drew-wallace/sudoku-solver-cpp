@@ -1,3 +1,4 @@
 .vscode
-*.0
+*.o
 SudokuPuzzle
+solved.txt
